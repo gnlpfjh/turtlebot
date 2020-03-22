@@ -1,0 +1,21 @@
+<launch>
+  <!-- "camera" should uniquely identify the device. All topics are pushed down
+       into the "camera" namespace, and it is prepended to tf frame ids. -->
+  <arg name="camera"      default="camera"/>
+  <arg name="publish_tf"  default="false"/>
+
+  <arg name="reg_method"                      default="cpu"/>
+  <arg name="depth_method"                    default="opencl"/>
+
+  <!-- Worker threads for the nodelet manager -->
+  <arg name="num_worker_threads" default="4" />
+
+  <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch">
+    <arg name="base_name"                          value="$(arg camera)"/>
+    <arg name="publish_tf"                      value="$(arg publish_tf)"/>
+    <arg name="num_worker_threads"              value="$(arg num_worker_threads)" />
+    <arg name="reg_method"                      value="$(arg reg_method)" />
+    <arg name="depth_method"                      value="$(arg depth_method)" />
+
+  </include>
+</launch>
