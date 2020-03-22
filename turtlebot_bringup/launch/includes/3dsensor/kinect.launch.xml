@@ -20,18 +20,11 @@
   <!-- Worker threads for the nodelet manager -->
   <arg name="num_worker_threads" default="4" />
 
-  <include file="$(find openni_launch)/launch/openni.launch">
-    <arg name="camera"                          value="$(arg camera)"/>
+  <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch">
+    <arg name="base_name"                          value="$(arg camera)"/>
     <arg name="publish_tf"                      value="$(arg publish_tf)"/>
-    <arg name="depth_registration"              value="$(arg depth_registration)"/>
     <arg name="num_worker_threads"              value="$(arg num_worker_threads)" />
+    <arg name="reg_method"                      value="$(arg reg_method)" />
+    <arg name="depth_method"                      value="$(arg depth_method)" />
 
-    <!-- Processing Modules -->
-    <arg name="rgb_processing"                  value="$(arg rgb_processing)"/>
-    <arg name="ir_processing"                   value="$(arg ir_processing)"/>
-    <arg name="depth_processing"                value="$(arg depth_processing)"/>
-    <arg name="depth_registered_processing"     value="$(arg depth_registered_processing)"/>
-    <arg name="disparity_processing"            value="$(arg disparity_processing)"/>
-    <arg name="disparity_registered_processing" value="$(arg disparity_registered_processing)"/>
-  </include>
-</launch>
+  </include></launch>
