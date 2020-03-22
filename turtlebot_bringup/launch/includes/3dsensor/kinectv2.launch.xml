@@ -3,9 +3,19 @@
        into the "camera" namespace, and it is prepended to tf frame ids. -->
   <arg name="camera"      default="camera"/>
   <arg name="publish_tf"  default="false"/>
+  <!-- Factory-calibrated depth registration -->
+  <arg name="depth_registration"              default="true"/>
+  <arg     if="$(arg depth_registration)" name="depth" value="depth_registered" />
+  <arg unless="$(arg depth_registration)" name="depth" value="depth" />
 
-  <arg name="reg_method"                      default="cpu"/>
-  <arg name="depth_method"                    default="opencl"/>
+  <!-- Processing Modules -->
+  <arg name="rgb_processing"                  default="true"/>
+  <arg name="ir_processing"                   default="true"/>
+  <arg name="depth_processing"                default="true"/>
+  <arg name="depth_registered_processing"     default="true"/>
+  <arg name="disparity_processing"            default="true"/>
+  <arg name="disparity_registered_processing" default="true"/>
+  <arg name="scan_processing"                 default="true"/>
 
   <!-- Worker threads for the nodelet manager -->
   <arg name="num_worker_threads" default="4" />
