@@ -1,0 +1,37 @@
+<launch>
+  <!-- "camera" should uniquely identify the device. All topics are pushed down
+       into the "camera" namespace, and it is prepended to tf frame ids. -->
+  <arg name="camera"      default="camera"/>
+  <arg name="publish_tf"  default="false"/>
+
+  <!-- Processing Modules -->
+  <arg name="rgb_processing"                  default="true"/>
+  <arg name="ir_processing"                   default="true"/>
+  <arg name="depth_processing"                default="true"/>
+  <arg name="depth_registered_processing"     default="true"/>
+  <arg name="disparity_processing"            default="true"/>
+  <arg name="disparity_registered_processing" default="true"/>
+  <arg name="scan_processing"                 default="true"/>
+
+  <!-- Worker threads for the nodelet manager -->
+  <arg name="num_worker_threads" default="4" />
+
+  <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch">
+    <arg name="base_name"                       value="$(arg camera)"/>
+    <arg name="publish_tf"                      value="$(arg publish_tf)"/>
+    <arg name="num_worker_threads"              value="$(arg num_worker_threads)" />
+    <arg name="reg_method"                      value="cpu" />
+    <!--arg name="depth_method"                    value="$(arg depth_method)" /-->
+
+    <remap from="hd/image_color" to="$(arg camera)/rgb/hd/image_color"/>
+    <remap from="hd/camera_info" to="$(arg camera)/rgb/hd/camera_info"/>
+    <remap from="sd/camera_info" to="$(arg camera)/rgb/camera_info"/>
+    <remap from="sd/image_color_rect" to="$(arg camera)/rgb/image_rect_color"/>
+    <remap from="sd/image_depth" to="$(arg camera)/depth/image_raw"/>
+    <remap from="sd/camera_info" to="$(arg camera)/depth/camera_info"/>
+    <remap from="sd/image_depth_rect" to="$(arg camera)/depth_registration/image_raw"/>
+    <remap from="sd/camera_info" to="$(arg camera)/depth_registration/camera_info"/>
+    <remap from="sd/points" to="$(arg camera)/depth_registration/points"/>
+  </include>
+
+</launch>
